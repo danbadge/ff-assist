@@ -1,15 +1,31 @@
-export const INCREMENT = 'INCREMENT';
-export type INCREMENT = typeof INCREMENT;
+import { PlayersArray } from '../types'
 
+export const PLAYERS_FETCH_REQUESTED = 'PLAYERS_FETCH_REQUESTED'
+export const PLAYERS_FETCH_SUCCEEDED = 'PLAYERS_FETCH_SUCCEEDED'
+export const PLAYERS_FETCH_FAILED = 'PLAYERS_FETCH_FAILED'
 
-export interface Increment {
-    type: INCREMENT;
+type FetchPlayersRequested = { type: typeof PLAYERS_FETCH_REQUESTED }
+type FetchPlayersSucceeded = { type: typeof PLAYERS_FETCH_SUCCEEDED, players: PlayersArray }
+type FetchPlayersFailed = { type: typeof PLAYERS_FETCH_FAILED, message: String }
+
+export type Actions = FetchPlayersRequested | FetchPlayersSucceeded | FetchPlayersFailed
+
+export const fetchPlayers = ():FetchPlayersRequested => {
+  return {
+    type: PLAYERS_FETCH_REQUESTED
+  }
 }
 
-export type IncrementAction = Increment;
+export const setPlayers = (players: PlayersArray):FetchPlayersSucceeded => {
+  return {
+    type: PLAYERS_FETCH_SUCCEEDED,
+    players: players
+  }
+}
 
-export function increment(): IncrementAction {
-    return {
-        type: INCREMENT
-    };
+export const setError = (message: String):FetchPlayersFailed => {
+  return {
+    type: PLAYERS_FETCH_FAILED,
+    message: message
+  }
 }

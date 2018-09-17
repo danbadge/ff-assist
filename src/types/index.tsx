@@ -1,3 +1,5 @@
+export type PlayersArray = Array<any>
+
 export interface StoreState {
-  increment: number;
+  players: PlayersArray
 }
