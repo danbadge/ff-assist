@@ -9,22 +9,27 @@
     "test": "jest"
   },
   "dependencies": {
-    "@types/jest": "^23.3.2",
     "@types/node": "^10.5.7",
     "@types/react": "^16.4.8",
     "@types/react-dom": "^16.0.7",
     "@types/react-redux": "^6.0.6",
-    "jest": "^23.6.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
-    "ts-jest": "^23.10.0",
     "ts-loader": "^4.4.2",
     "typescript": "^3.0.1",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5"
+    "webpack-dev-server": "^3.1.5",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.2",
+    "@types/sinon": "^5.0.2",
+    "jest": "^23.6.0",
+    "sinon": "^6.3.4",
+    "ts-jest": "^23.10.0"
   }
 }

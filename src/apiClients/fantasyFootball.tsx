@@ -1,4 +1,5 @@
 import { PlayersArray } from '../types'
+import 'whatwg-fetch'
 
 export function fetchPlayers(): Promise<PlayersArray> {
   const options: RequestInit = {
@@ -9,7 +10,7 @@ export function fetchPlayers(): Promise<PlayersArray> {
     mode: 'cors'
   }
 
-  return fetch("https://fantasy.premierleague.com/drf/bootstrap-static", options)
+  return fetch('https://fantasy.premierleague.com/drf/bootstrap-static', options)
     .then(response => {
       if (response.ok)
         return response.json()

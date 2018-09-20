@@ -5,7 +5,7 @@ import {
   setPlayers, 
   setError
 } from '../actions';
-import * as FantasyFootballApi from '../api_clients/fantasyFootball'
+import * as FantasyFootballApi from '../apiClients/fantasyFootball'
 
 const fetchPlayers = function* () {
   try {
