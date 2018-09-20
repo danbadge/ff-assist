@@ -1,4 +1,6 @@
 import { fakeServer } from 'sinon'
+
+import { ErrorResult, ApiResult, PlayersArray } from '../../types'
 import { fetchPlayers } from '../../apiClients/fantasyFootball'
 
 let fakeHttpServer: sinon.SinonFakeServer
@@ -33,7 +35,14 @@ describe('when making request to the EPL Fantasy Football API', () => {
     it('returns the players in the response body', (done) => {
       fetchPlayers()
         .then(result => {
-          expect(result).toEqual([{ name: "Player 1" }])
+          const playersArray: PlayersArray = [{ name: 'Player 1' }]
+
+          const expectedResult: ApiResult<PlayersArray> = {
+            status: 'ok',
+            data: playersArray
+          }
+
+          expect(result).toEqual(expectedResult)
           done()
         })
         .catch(done)
@@ -55,10 +64,15 @@ describe('when making request to the EPL Fantasy Football API', () => {
       )
     })
 
-    it('returns an empty list', (done) => {
+    it('returns an error result', (done) => {
       fetchPlayers()
         .then(result => {
-          expect(result).toEqual([])
+          const expectedResult: ErrorResult = {
+            status: 'error',
+            message: 'Unsuccessful request to FPL 500'
+          }
+
+          expect(result).toEqual(expectedResult)
           done()
         })
         .catch(done)

@@ -5,15 +5,15 @@ import {
   setPlayers, 
   setError
 } from '../actions';
+
 import * as FantasyFootballApi from '../apiClients/fantasyFootball'
 
 export const fetchPlayers = function* (): any {
-  try {
-    const players = yield call(FantasyFootballApi.fetchPlayers)
-    yield put(setPlayers(players))
-  } catch (e) {
-    yield put(setError(e.message))
-  }
+  const result = yield call(FantasyFootballApi.fetchPlayers)
+
+  result.status == 'ok'
+    ? yield put(setPlayers(result.data))
+    : yield put(setError(result.message))
 }
 
 const runSagaEffects = function* (): any {

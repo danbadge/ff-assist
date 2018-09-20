@@ -1,7 +1,8 @@
-import { PlayersArray } from '../types'
+import { PlayersArray, ApiResult, ErrorResult } from '../types'
+import { reject } from 'promise'
 import 'whatwg-fetch'
 
-export function fetchPlayers(): Promise<PlayersArray> {
+export function fetchPlayers(): Promise<ApiResult<PlayersArray> | ErrorResult> {
   const options: RequestInit = {
     headers: {
       'Content-Type': 'application/json',
@@ -14,14 +15,25 @@ export function fetchPlayers(): Promise<PlayersArray> {
     .then(response => {
       if (response.ok)
         return response.json()
-      else
-        throw new Error(`Unsuccessful request to FPL ${response.status}`)
+      else {
+        console.log("here")
+        return reject(`Unsuccessful request to FPL ${response.status}`)
+      }
     })
     .then((responseBody) => {
-      return responseBody.elements
+      const result: ApiResult<PlayersArray> = {
+        status: 'ok',
+        data: responseBody.elements
+      }
+
+      return result
     })
     .catch(error => {
-      console.error(error)
-      return []
+      const errorResult: ErrorResult = {
+        status: 'error',
+        message: error
+      }
+
+      return errorResult
     })
 }

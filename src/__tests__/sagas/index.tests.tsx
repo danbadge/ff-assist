@@ -1,9 +1,9 @@
 import { runSaga } from 'redux-saga'
-import { sandbox } from 'sinon'
+import { createSandbox } from 'sinon'
 
 import * as api from '../../apiClients/fantasyFootball'
-import { Actions, setPlayers } from '../../actions'
-import { StoreState, PlayersArray } from '../../types'
+import { Actions, setPlayers, setError } from '../../actions'
+import { StoreState, PlayersArray, ApiResult, ErrorResult } from '../../types'
 import { fetchPlayers } from '../../sagas'
 
 let sinonSandbox: sinon.SinonSandbox
@@ -28,12 +28,13 @@ describe('given we have fetched players from the FF API', () => {
   })
 
   beforeEach(() => {
-    sinonSandbox = sandbox.create()
+    sinonSandbox = createSandbox()
   })
 
   it('when successful, it dispatches a "set players" event', (done) => {
     const players: PlayersArray = [{name: 'Player 1'}]
-    sinonSandbox.stub(api, 'fetchPlayers').callsFake(() => players)
+    const result: ApiResult<PlayersArray> = { status: 'ok', data: players }
+    sinonSandbox.stub(api, 'fetchPlayers').callsFake(() => result)
 
     const state: StoreState = {
       players: []
@@ -47,18 +48,19 @@ describe('given we have fetched players from the FF API', () => {
       .catch(done)    
   })
 
-  // it('when unsuccessful it dispatches a "set error" event', (done) => {
-  //   sinonSandbox.stub(api, 'fetchPlayers').callsFake(() => throw new Error())
+  it('when unsuccessful it dispatches a "set error" event', (done) => {
+    const errorResult: ErrorResult = { status: 'error', message: 'This gone wrong' }
+    sinonSandbox.stub(api, 'fetchPlayers').callsFake(() => errorResult)
 
-  //   const state: StoreState = {
-  //     players: []
-  //   }
+    const state: StoreState = {
+      players: []
+    }
 
-  //   runFetchPlayersSaga(state)
-  //     .then(() => {
-  //       expect(dispatched).toEqual([setError()])
-  //       done()
-  //     })
-  //     .catch(done)    
-  // })
+    runFetchPlayersSaga(state)
+      .then(() => {
+        expect(dispatched).toEqual([setError(errorResult.message)])
+        done()
+      })
+      .catch(done)    
+  })
 })
