@@ -10,20 +10,20 @@ type FetchPlayersFailed = { type: typeof PLAYERS_FETCH_FAILED, message: String }
 
 export type Actions = FetchPlayersRequested | FetchPlayersSucceeded | FetchPlayersFailed
 
-export const fetchPlayers = ():FetchPlayersRequested => {
+export const fetchPlayers = (): FetchPlayersRequested => {
   return {
     type: PLAYERS_FETCH_REQUESTED
   }
 }
 
-export const setPlayers = (players: PlayersArray):FetchPlayersSucceeded => {
+export const setPlayers = (players: PlayersArray): FetchPlayersSucceeded => {
   return {
     type: PLAYERS_FETCH_SUCCEEDED,
     players: players
   }
 }
 
-export const setError = (message: String):FetchPlayersFailed => {
+export const setError = (message: String): FetchPlayersFailed => {
   return {
     type: PLAYERS_FETCH_FAILED,
     message: message

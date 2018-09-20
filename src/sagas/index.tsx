@@ -16,7 +16,7 @@ const fetchPlayers = function* () {
   }
 }
 
-const runSagaEffects = function* ():any {
+const runSagaEffects = function* (): any {
   yield takeEvery(PLAYERS_FETCH_REQUESTED, fetchPlayers)
 }
 

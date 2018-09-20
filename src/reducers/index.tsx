@@ -4,7 +4,7 @@ import {
 } from '../actions';
 import { StoreState } from '../types/index';
 
-const initialState:StoreState = {
+const initialState: StoreState = {
   players: []
 }
 
