@@ -16,7 +16,6 @@ export function fetchPlayers(): Promise<ApiResult<PlayersArray> | ErrorResult> {
       if (response.ok)
         return response.json()
       else {
-        console.log("here")
         return reject(`Unsuccessful request to FPL ${response.status}`)
       }
     })
