@@ -7,7 +7,7 @@ import {
 } from '../actions';
 import * as FantasyFootballApi from '../apiClients/fantasyFootball'
 
-const fetchPlayers = function* () {
+export const fetchPlayers = function* (): any {
   try {
     const players = yield call(FantasyFootballApi.fetchPlayers)
     yield put(setPlayers(players))
